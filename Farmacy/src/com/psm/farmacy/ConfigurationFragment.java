@@ -53,7 +53,6 @@ public class ConfigurationFragment extends Fragment{
 		spnLang.setSelection(sharedPref.getInt("lang",0));		
 		CreateListener();
 		return vi;
-		//return super.onCreateView(inflater, container, savedInstanceState);
 	}
 
 	@Override

@@ -1,6 +1,5 @@
 package com.psm.farmacy;
 
-import java.util.List;
 import com.psm.Database.Procedures;
 import android.app.Activity;
 import android.os.Bundle;
@@ -16,6 +15,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
+import android.widget.Toast;
 
 public class ProfileAddFragment extends Fragment{
 
@@ -23,8 +24,9 @@ public class ProfileAddFragment extends Fragment{
 	private EditText  txtName;
 	private EditText  txtAge;
 	private Button btnSave;
-	private Activity actParent;
 	private FragmentActivity myContext;
+	private RadioGroup radioGGen;
+
 	
 	
 	@Override
@@ -46,6 +48,7 @@ public class ProfileAddFragment extends Fragment{
 		txtName=(EditText)vi.findViewById(R.id.profiletxtName);
 		txtAge=(EditText)vi.findViewById(R.id.profiletxtAge);
 		btnSave=(Button)vi.findViewById(R.id.profilebtnSave);
+		radioGGen=(RadioGroup) vi.findViewById(R.id.radioGGen);
 		CreateListener();
 		return vi;
 		//return super.onCreateView(inflater, container, savedInstanceState);
@@ -63,6 +66,35 @@ public class ProfileAddFragment extends Fragment{
 			
 			@Override
 			public void onClick(View v) {	
+				String nombre="";
+				String edad="0";
+				String sexo="H";
+				if(txtName.getText().toString().equals(""))
+				{
+					Toast.makeText(getActivity(),"Nombre requerido",Toast.LENGTH_SHORT).show();
+				}
+				else
+				{
+					nombre=txtName.getText().toString();
+					edad= txtAge.getText().toString()==""||
+							txtAge.getText().toString()==""?"0":
+								 txtAge.getText().toString(); 
+					
+				}
+				Procedures pr= new Procedures(getActivity());				
+				int rdio =radioGGen.getCheckedRadioButtonId();
+				if(rdio== R.id.profilerdoFemale)
+				{
+					sexo="M";
+				}				
+				if(pr.AddUsuario(nombre, edad, sexo))
+				{
+					Toast.makeText(getActivity(), "Actualizado", Toast.LENGTH_SHORT).show();					
+				}
+				else
+				{
+					Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+				}				
 				FragmentManager fragManager = myContext.getSupportFragmentManager();
 				fragManager.beginTransaction().replace(R.id.container, new ProfileFragment()).commit();				
 			}

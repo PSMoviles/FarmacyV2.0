@@ -2,7 +2,7 @@ package com.psm.Database;
 
 import java.util.ArrayList;
 import java.util.List;
-import android.content.ContentValues;
+//import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,13 +11,13 @@ import com.psm.Model.*;
 public class Procedures {
 	private Source dbSource;
 	private SQLiteDatabase database;	
-	private ContentValues values;
+	//private ContentValues values;
 	//private String query;
 	
 	public Procedures(Context context)
 	{
 		this.dbSource= new Source(context);
-		values = new ContentValues();
+		//values = new ContentValues();
 	}
 	
 	private void OpenToWrite()
@@ -234,9 +234,9 @@ public class Procedures {
 	public List<String[]> LstTratamientos(int usuarioId)
 	{
 		List<String[]> lista= new ArrayList<String[]>();
-		Cursor dataset;
+		//Cursor dataset;
 		OpenToRead();
-		dataset=database.rawQuery("Select Tratamiento from  ",null);
+		//dataset=database.rawQuery("Select Tratamiento from  ",null);
 		
 		Close();
 		return lista;
@@ -245,30 +245,41 @@ public class Procedures {
 	public List<String> LstUsuarios()
 	{
 		List<String> lista= new ArrayList<String>();
-		Cursor dataset;
-		OpenToRead();
-		dataset=database.rawQuery("Select Usuario from tbl_usuario",null);
-		if(dataset.moveToFirst())
+		try
 		{
-			while(!dataset.isAfterLast())
+			Cursor dataset;
+			OpenToRead();
+			dataset=database.rawQuery("Select Usuario from tbl_usuario",null);
+			if(dataset.moveToFirst())
 			{
-				lista.add(dataset.getString(0));
-				dataset.moveToNext();
+				while(!dataset.isAfterLast())
+				{
+					lista.add(dataset.getString(0));
+					dataset.moveToNext();
+				}
 			}
-		}		
+			Close();
+		}
+		catch(Exception ex)
+		{					
+			if(database.isOpen())
+				Close();
+		}
 		Close();
 		return lista;		
+		
 	}
 	
 	public boolean AddUsuario(String usuario,String edad,String sexo)
 	{
 		try
 		{
-			database.execSQL("insert into tbl_usuario(Usuario,Edad,Correo)VALUES("+usuario+","+edad+","+sexo+"')");
-		return true;
+			OpenToWrite();
+			database.execSQL("insert into tbl_usuario(Usuario,Edad,Sexo)VALUES('"+usuario+"',"+edad+",'"+sexo+"')");
+			return true;
 		}
 		catch(Exception ex)
-		{
+		{			
 			return false;
 		}
 		

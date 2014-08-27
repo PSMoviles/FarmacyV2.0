@@ -2,6 +2,7 @@ package com.psm.farmacy;
 
 //import com.psm.Database.Procedures;
 //import com.psm.Model.Lang;
+import com.psm.Database.Procedures;
 import com.psm.utilery.*;
 
 import android.app.Activity;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 
 public class Home extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+	public Procedures pr;
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -74,19 +76,31 @@ public class Home extends ActionBarActivity
     	Fragment fragment= new Fragment();
     	switch(position)
     	{
+    		case 0:
+    			fragment= PlaceholderFragment.newInstance(position + 1);
+    			 mTitle = getString(R.string.navDrw_Home);
+    			break;
 	    	case 1:
-	    		fragment = new ProfileFragment(); 	    		
+	    		fragment = new ProfileFragment(); 	 
+	    		 mTitle = getString(R.string.navDrw_Profile);  
 	    		break;
 	    	case 2:
+	    		fragment= new HistoryFragment();
 	    		break;
 	    	case 3:
+	    		fragment= new MedicationFragment();
+	    		mTitle = getString(R.string.navDrw_Medication); 
 	    		break;
 	    	case 4:
+	    		fragment= new DrugstoreMapFragment();
+	    		mTitle=getString(R.string.navDrw_Drugstores);
 	    		break;
 	    	case 5: 
-	    		fragment = new ConfigurationFragment();	    		
+	    		fragment = new ConfigurationFragment();	 
+	    		 mTitle = getString(R.string.navDrw_Configuration);        
 	    		break;
 	    	case 6:
+	    		mTitle=getString(R.string.navDrw_About);  
 	    		break;
     		default:    			
         		fragmentManager.beginTransaction()

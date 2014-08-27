@@ -54,7 +54,7 @@ public class Source extends SQLiteOpenHelper{
 		}
 		
 		db.execSQL("Insert Into tbl_medicina(Medicina,Indicacion,ExcipienteId,ActivoId1) VALUES('Tempra','Alivio de dolor y fiebre',5,2)");
-		db.execSQL("insert into tbl_usuario(Usuario,Edad,Correo)VALUES('Farmacy',20,'M')");
+		db.execSQL("insert into tbl_usuario(Usuario,Edad,Sexo)VALUES('Farmacy',20,'M')");
 		
 	}
 	
@@ -75,7 +75,7 @@ public class Source extends SQLiteOpenHelper{
 		"UsuarioId INTEGER PRIMARY KEY AUTOINCREMENT," +
 		"Usuario TEXT NULL," +
 		"Edad  INTEGER NULL," +		
-		"sexo TEXT NULL" +
+		"Sexo TEXT NULL" +
 		")";	
 	
 	private static final String TBL_MEDICINA = 
@@ -160,7 +160,7 @@ public class Source extends SQLiteOpenHelper{
 		{"L","Supositorios","Suppositories","Suppositoires"},
 		{"C","Loción","Lotion","Lotion"},
 		{"C","Polvos","Powder","Poudre"},
-		{"G","Pastasta","Pâtes"},
+		{"G","Pasta","Pasta","Pâtes"},
 		{"G","Ungüento","Ointment","Pommade"},
 		{"G","Gel","Gel","Gel"},
 		{"I","Spay","Spray","Spray"},
