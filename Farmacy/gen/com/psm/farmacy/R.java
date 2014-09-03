@@ -1481,9 +1481,9 @@ containing a value of this type.
     public static final class id {
         public static final int ItmLabel=0x7f080066;
         public static final int LinearLayout1=0x7f08005a;
-        public static final int OrderDate=0x7f080068;
-        public static final int OrderUser=0x7f080069;
-        public static final int ProfileAdd=0x7f08006a;
+        public static final int OrderDate=0x7f080069;
+        public static final int OrderUser=0x7f08006a;
+        public static final int ProfileAdd=0x7f08006b;
         public static final int action_bar=0x7f08002e;
         public static final int action_bar_activity_content=0x7f080027;
         public static final int action_bar_container=0x7f08002d;
@@ -1495,7 +1495,7 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f080028;
         public static final int action_menu_presenter=0x7f080029;
         public static final int action_mode_close_button=0x7f080036;
-        public static final int action_settings=0x7f080067;
+        public static final int action_settings=0x7f080068;
         public static final int activity_chooser_view_content=0x7f080037;
         public static final int always=0x7f08001e;
         public static final int beginning=0x7f080023;
@@ -1582,6 +1582,7 @@ containing a value of this type.
         public static final int terrain=0x7f080003;
         public static final int title=0x7f08003d;
         public static final int top_action_bar=0x7f080032;
+        public static final int tvUsername=0x7f080067;
         public static final int up=0x7f080033;
         public static final int useLogo=0x7f080016;
         public static final int withText=0x7f08001f;
@@ -1650,6 +1651,7 @@ containing a value of this type.
         public static final int fragment_profile_add=0x7f030021;
         public static final int spn_item=0x7f030022;
         public static final int support_simple_spinner_dropdown_item=0x7f030023;
+        public static final int userlist_item=0x7f030024;
     }
     public static final class menu {
         public static final int global=0x7f0c0000;

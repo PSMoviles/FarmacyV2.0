@@ -1,11 +1,15 @@
 package com.psm.farmacy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.psm.Database.Procedures;
+import com.psm.Model.User;
+import com.psm.UI.UserListAdapter;
 
 //import android.app.Activity;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
@@ -18,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -31,7 +36,7 @@ public class ProfileFragment extends Fragment{
 
 	//private Activity actParent;
 	private View vi;
-	private List<String> usuarios;
+	private List<User> usuarios = new ArrayList<User>();
 	private ListView lstUsers;
 	private OnItemLongClickListener lstUsersListener;
 	
@@ -56,7 +61,8 @@ public class ProfileFragment extends Fragment{
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		vi= inflater.inflate(R.layout.fragment_profile, container, false);
 		lstUsers=(ListView) vi.findViewById(R.id.profilelstUsers);		
-		lstUsers.setAdapter(new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,usuarios));
+		lstUsers.setAdapter(new UserListAdapter(getActivity(), usuarios));
+		//lstUsers.setAdapter(new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,usuarios));
 		registerForContextMenu(lstUsers);	
 		CreateListeners();
 		return vi;		
@@ -91,7 +97,9 @@ public class ProfileFragment extends Fragment{
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
 		if(v.getId()==R.id.profilelstUsers)
-		{					    		    
+		{					
+//			Vibrator vi = (Vibrator) getActivity().getSystemService("VIBRATOR_SERVICE");
+//			vi.vibrate(3000);
 		    menu.add(Menu.NONE,0,Menu.NONE,"Detalles");
 		    menu.add(Menu.NONE,1,Menu.NONE,"Editar");
 		    menu.add(Menu.NONE,2,Menu.NONE,"Eliminar");
@@ -104,10 +112,13 @@ public class ProfileFragment extends Fragment{
 		lstUsers.setOnItemLongClickListener(new OnItemLongClickListener() {
 
 			@Override
-			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-					int arg2, long arg3) {
-				Toast.makeText(getActivity(), "arg02"+String.valueOf(arg2)+""
-						+"arg3"+String.valueOf(arg3),Toast.LENGTH_SHORT ).show();
+			public boolean onItemLongClick(AdapterView<?> arg0, View v,
+					int position, long arg3) {
+				Toast.makeText(getActivity(),"" + usuarios.get(position).getId() +
+						usuarios.get(position).getUsuario() + 
+						usuarios.get(position).getEdad() +
+						usuarios.get(position).getSexo() 
+						,Toast.LENGTH_SHORT ).show();
 				return false;
 			}
 		});
