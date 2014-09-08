@@ -1,8 +1,7 @@
 package com.psm.farmacy;
 
-//import com.psm.Database.Procedures;
-//import com.psm.Model.Lang;
 import com.psm.Database.Procedures;
+import com.psm.UI.*;
 import com.psm.utilery.*;
 
 import android.app.Activity;
@@ -20,11 +19,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
+import android.widget.ListView;
 import android.widget.Toast;
 
 public class Home extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 	public Procedures pr;
+	private static ListView lstLast;
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -54,13 +55,10 @@ public class Home extends ActionBarActivity
                 (DrawerLayout) findViewById(R.id.drawer_layout));
         try
         {
-        //Procedures pr= new Procedures(this);
-        //List<String> lista= pr.LstPeriodos(Lang.French);
-        //int id=pr.SrcPeriodo("Ans", Lang.French);
-       // List<String> lista= pr.LstActivos(Lang.French);
-        //List<String[]> lista= pr.LstExcipientes(Lang.English);
-        //int id=pr.SrcExcipiente("Drops", Lang.English);       
-        DateOperations.GenerateSchedule("20140205102511", 1, 8);
+        	Fragment f= new HomeFragment();
+        	CambiarFragment(f);     	       
+        	        
+
         }catch(Exception ex)
         {        	
         	String exep=ex.getMessage();
@@ -77,7 +75,7 @@ public class Home extends ActionBarActivity
     	switch(position)
     	{
     		case 0:
-    			fragment= PlaceholderFragment.newInstance(position + 1);
+    			fragment= new HomeFragment();//PlaceholderFragment.newInstance(position + 1);
     			 mTitle = getString(R.string.navDrw_Home);
     			break;
 	    	case 1:
@@ -217,7 +215,7 @@ public class Home extends ActionBarActivity
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_home, container, false);            
             return rootView;
         }
 

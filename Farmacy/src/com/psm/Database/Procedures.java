@@ -1,11 +1,15 @@
 package com.psm.Database;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 //import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
 import com.psm.Model.*;
 
 public class Procedures {
@@ -38,7 +42,7 @@ public class Procedures {
 
 	/*Catálogos de la base de datos*/
 
-	public List<String> LstPeriodos(Lang lan)
+	public List<String> lstPeriodos(Lang lan)
 	{
 		List<String> lista= new ArrayList<String>();
 		Cursor dataset;
@@ -70,7 +74,7 @@ public class Procedures {
 		return lista;
 	}
 
-	public int SrcPeriodoId(String periodo,Lang lan)
+	public int srcPeriodoId(String periodo,Lang lan)
 	{
 		OpenToRead();
 		Cursor dataset;
@@ -102,7 +106,7 @@ public class Procedures {
 		return id;
 	}
 
-	public List<String> LstActivos(Lang lan)
+	public List<String> lstActivos(Lang lan)
 	{
 		List<String> lista= new ArrayList<String>();
 		Cursor dataset;
@@ -134,7 +138,7 @@ public class Procedures {
 		return lista;
 	}
 
-	public int SrcActivoId(String activo,Lang lan)
+	public int srcActivoId(String activo,Lang lan)
 	{
 		OpenToRead();
 		Cursor dataset;
@@ -166,7 +170,7 @@ public class Procedures {
 		return id;
 	}
 
-	public List<String[]> LstExcipientes(Lang lan)
+	public List<String[]> lstExcipientes(Lang lan)
 	{
 		List<String[]> lista= new ArrayList<String[]>();
 		Cursor dataset;
@@ -199,7 +203,7 @@ public class Procedures {
 		return lista;
 	}
 
-	public int SrcExcipiente(String excipiente,Lang lan)
+	public int srcExcipiente(String excipiente,Lang lan)
 	{
 		OpenToRead();
 		Cursor dataset;
@@ -231,7 +235,7 @@ public class Procedures {
 		return id;
 	}
 
-	public List<String[]> LstTratamientos(int usuarioId)
+	public List<String[]> lstTratamientos(int usuarioId)
 	{
 		List<String[]> lista= new ArrayList<String[]>();
 		//Cursor dataset;
@@ -242,7 +246,7 @@ public class Procedures {
 		return lista;
 	}
 
-	public List<User> LstUsuarios()
+	public List<User> lstUsuarios()
 	{
 		List<User> lista= new ArrayList<User>();
 		try
@@ -271,7 +275,7 @@ public class Procedures {
 
 	}
 
-	public boolean AddUsuario(String usuario,String edad,String sexo)
+	public boolean addUsuario(String usuario,String edad,String sexo)
 	{
 		try
 		{
@@ -292,9 +296,57 @@ public class Procedures {
 			OpenToWrite();
 			return true;
 		}
-		catch(Exception e)
-		{
+		catch(Exception ex)
+		{			
+			Log.println(0, "FarmacyLog", ex.getMessage());
 			return false;
 		}
+	}
+	
+	public List<Take> srcLast()
+	{
+		try
+		{
+			List<Take> lista=new ArrayList<Take>();					    
+			OpenToRead();
+			Cursor dataset;
+			dataset=database.rawQuery("Select a.RelacionId,a.TomaNo, a.Fecha,a.Tomada,a.Reprogramada,b.MedicinaId, " +
+					"d.Medicina,b.TratamientoId, c.Tratamiento,d.ExcipienteId, e.Excipiente,e.Icon,f.UsuarioId,f.Usuario  " +
+					"from tbl_horario a " +
+					"inner join tbl_MedicinaTratamiento b on a.RelacionId=b.RelacionId " +
+					"inner join tbl_Tratamiento c on b.TratamientoId=c.TratamientoId " +
+					"inner join tbl_Medicina d on b.MedicinaId=d.MedicinaId " +
+					"inner join tbl_Excipiente e on d.ExcipienteId=e.ExcipienteId " +
+					"inner join tbl_Usuario f on c.UsuarioId =f.UsuarioId ",null);
+			if(dataset.moveToFirst())
+			{				
+				while(!dataset.isAfterLast())
+				{
+					Take toma= new Take();
+					toma.setRelacionId(dataset.getInt(dataset.getColumnIndex("RelacionId")));				
+					toma.setTomaNo(dataset.getInt(dataset.getColumnIndex("TomaNo")));
+					toma.setMedicinaId(dataset.getInt(dataset.getColumnIndex("MedicinaId")));
+					toma.setMedicina(dataset.getString(dataset.getColumnIndex("Medicina")));
+					toma.setTratamientoId(dataset.getInt(dataset.getColumnIndex("TratamientoId")));
+					toma.setTratamiento(dataset.getString(dataset.getColumnIndex("Tratamiento")));
+					toma.setIcon(dataset.getString(dataset.getColumnIndex("Icon")));
+					toma.setUsuarioId(dataset.getInt(dataset.getColumnIndex("UsuarioId")));
+					toma.setUsuario(dataset.getString(dataset.getColumnIndex("Usuario")));
+					String date=dataset.getString(dataset.getColumnIndex("Fecha")); 
+					SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+					toma.setFecha(f.parse(date));
+					String algo="";
+					lista.add(toma);
+					dataset.moveToNext();
+				}				
+			}			
+			Close();
+			return lista;
+		}
+		catch(Exception ex)
+		{
+			Log.println(Log.ERROR, "FarmacyLog", ex.getMessage());		
+			return null;
+		}		
 	}
 }

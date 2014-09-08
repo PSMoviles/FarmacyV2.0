@@ -1,6 +1,6 @@
 package com.psm.Model;
 
-public class Medicina {
+public class Medicine {
 	private int Id;
 	private String nombre;
 	private String indicacion;

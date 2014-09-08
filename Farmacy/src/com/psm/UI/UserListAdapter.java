@@ -51,7 +51,7 @@ public class UserListAdapter extends BaseAdapter {
 		  
 	    if(convertView == null) {
 	      LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	      vi = inflater.inflate(R.layout.userlist_item, null);
+	      vi = inflater.inflate(R.layout.item_user_list, null);
 	    }
 	    User item=listUser.get(position);
 	    TextView text=(TextView) vi.findViewById(R.id.tvUsername);

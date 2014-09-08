@@ -48,7 +48,7 @@ public class ProfileFragment extends Fragment{
 		try
 		{
 			Procedures pr= new Procedures(getActivity());
-			usuarios=pr.LstUsuarios();
+			usuarios=pr.lstUsuarios();
 		}
 		catch(Exception ex)
 		{

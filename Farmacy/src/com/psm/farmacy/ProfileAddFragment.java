@@ -87,7 +87,7 @@ public class ProfileAddFragment extends Fragment{
 				{
 					sexo="M";
 				}				
-				if(pr.AddUsuario(nombre, edad, sexo))
+				if(pr.addUsuario(nombre, edad, sexo))
 				{
 					Toast.makeText(getActivity(), "Actualizado", Toast.LENGTH_SHORT).show();					
 				}
