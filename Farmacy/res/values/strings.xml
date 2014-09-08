@@ -8,6 +8,8 @@
     <string name="gen_cancel">Cancelar</string>   
     <string name="gen_male">Hombre</string>
     <string name="gen_female">Mujer</string>
+    <string name="gen_search">Buscar</string>
+    <string name="gen_save">Guardar</string>
      
     <string name="home_txtWelcome">Bienvenido</string>
     
@@ -37,5 +39,16 @@
     <string name="conf_theme_red">Fire red</string>
     
     <string name="prof_name">Nombre</string>
-    <string name="prof_age">Edad</string>   
+    <string name="prof_age">Edad</string>
+    
+    <string name="med_medications">Tratamientos</string>   
+    <string name="med_medicine">Medicinas</string>   
+    <string name="med_active">Activos</string>
+    <string name="med_active_hint">Nombre del activo</string>
+    
+    <string name="med_madd">Medicina</string>
+    <string name="med_mtype">Presentación</string>
+    <string name="med_actives">Activo(s)</string>    
+    
+    
 </resources>

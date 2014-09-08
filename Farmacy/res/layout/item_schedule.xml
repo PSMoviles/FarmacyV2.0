@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:layout_weight=".50"
+            android:layout_weight=".70"
             android:orientation="vertical" >
 
             <TextView
@@ -31,7 +31,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <TextView
-                android:id="@+id/txtActive"
+                android:id="@+id/txtActiveName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Medium Text"

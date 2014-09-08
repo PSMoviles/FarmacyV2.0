@@ -42,8 +42,7 @@ public class ProfileAddFragment extends Fragment{
 
 	@Override
 	public View onCreateView(LayoutInflater inflater,
-			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		
+			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {		
 		vi= inflater.inflate(R.layout.fragment_profile_add, container, false);	
 		txtName=(EditText)vi.findViewById(R.id.profiletxtName);
 		txtAge=(EditText)vi.findViewById(R.id.profiletxtAge);
@@ -51,7 +50,6 @@ public class ProfileAddFragment extends Fragment{
 		radioGGen=(RadioGroup) vi.findViewById(R.id.radioGGen);
 		CreateListener();
 		return vi;
-		//return super.onCreateView(inflater, container, savedInstanceState);
 	}
 	
 	@Override

@@ -9,26 +9,20 @@ import com.psm.UI.UserListAdapter;
 
 //import android.app.Activity;
 import android.os.Bundle;
-import android.os.Vibrator;
+
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
-//import android.support.v7.app.ActionBar;
-//import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -41,8 +35,7 @@ public class ProfileFragment extends Fragment{
 	private OnItemLongClickListener lstUsersListener;
 	
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
+	public void onCreate(Bundle savedInstanceState) {		
 		setHasOptionsMenu(true);
 		super.onCreate(savedInstanceState);
 		try
@@ -61,8 +54,7 @@ public class ProfileFragment extends Fragment{
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		vi= inflater.inflate(R.layout.fragment_profile, container, false);
 		lstUsers=(ListView) vi.findViewById(R.id.profilelstUsers);		
-		lstUsers.setAdapter(new UserListAdapter(getActivity(), usuarios));
-		//lstUsers.setAdapter(new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,usuarios));
+		lstUsers.setAdapter(new UserListAdapter(getActivity(), usuarios));		
 		registerForContextMenu(lstUsers);	
 		CreateListeners();
 		return vi;		
@@ -71,10 +63,10 @@ public class ProfileFragment extends Fragment{
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {	
 		menu.clear();		
-		inflater.inflate(R.menu.profile, menu);		
+		inflater.inflate(R.menu.profile, menu);	
+		
 	}
 	
-
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		switch(item.getItemId())
@@ -92,7 +84,6 @@ public class ProfileFragment extends Fragment{
 		return super.onContextItemSelected(item);
 	}
 	
-
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {

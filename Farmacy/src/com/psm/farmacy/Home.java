@@ -19,13 +19,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.DrawerLayout.DrawerListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
 public class Home extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
-	public Procedures pr;
-	private static ListView lstLast;
+	public Procedures pr;	
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -56,9 +56,7 @@ public class Home extends ActionBarActivity
         try
         {
         	Fragment f= new HomeFragment();
-        	CambiarFragment(f);     	       
-        	        
-
+        	CambiarFragment(f);  
         }catch(Exception ex)
         {        	
         	String exep=ex.getMessage();
@@ -87,6 +85,7 @@ public class Home extends ActionBarActivity
 	    		break;
 	    	case 3:
 	    		fragment= new MedicationFragment();
+	    		//fragment= new ActivesFragment();
 	    		mTitle = getString(R.string.navDrw_Medication); 
 	    		break;
 	    	case 4:
@@ -149,10 +148,7 @@ public class Home extends ActionBarActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (!mNavigationDrawerFragment.isDrawerOpen()) {
-            // Only show items in the action bar relevant to this screen
-            // if the drawer is not showing. Otherwise, let the drawer
-            // decide what to show in the action bar.
+        if (!mNavigationDrawerFragment.isDrawerOpen()) {            
             getMenuInflater().inflate(R.menu.home, menu);
             restoreActionBar();
             return true;
@@ -162,9 +158,6 @@ public class Home extends ActionBarActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;            
@@ -174,6 +167,11 @@ public class Home extends ActionBarActivity
         	Toast.makeText(this,"Adding a new profile",Toast.LENGTH_LONG).show();
         	Fragment frag= new ProfileAddFragment();
         	CambiarFragment(frag);
+        }
+        if(id==R.id.MedicineAdd)
+        {
+        	Fragment frag= new MedicineAddFragment();
+        	CambiarFragment(frag);        	
         }
         return super.onOptionsItemSelected(item);
     }
@@ -186,21 +184,11 @@ public class Home extends ActionBarActivity
 		FT.addToBackStack(null);
 		FT.commit();
     }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
+    
     public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
+       
         private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
+        
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();

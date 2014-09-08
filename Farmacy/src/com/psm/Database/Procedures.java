@@ -15,6 +15,7 @@ import com.psm.Model.*;
 public class Procedures {
 	private Source dbSource;
 	private SQLiteDatabase database;	
+	
 	//private ContentValues values;
 	//private String query;
 
@@ -105,7 +106,7 @@ public class Procedures {
 		Close();
 		return id;
 	}
-
+	
 	public List<String> lstActivos(Lang lan)
 	{
 		List<String> lista= new ArrayList<String>();
@@ -138,6 +139,41 @@ public class Procedures {
 		return lista;
 	}
 
+	public List<String> srcActivos(Lang lan, String activo)
+	{
+		List<String> lista= new ArrayList<String>();
+		OpenToRead();
+		Cursor dataset;
+		switch(lan)
+		{
+		case Spanish:
+			dataset=database.rawQuery("Select ActivoId,Activo from tbl_Activos where Activo like '%"+ activo+"%'",null);
+			break;
+		case French:
+			dataset=database.rawQuery("Select ActivoId,ActivoF from tbl_Activos where ActivoF like '%"+ activo+"%'",null);
+			break;
+		case English:
+			dataset=database.rawQuery("Select ActivoId,ActivoE from tbl_Activos where ActivoE like '%"+ activo+"%'",null);
+			break;
+		default:
+			dataset=database.rawQuery("Select ActivoId,Activo from tbl_Activos where Activo like '%"+ activo+"%'",null);
+			break;
+		}
+		if(dataset.moveToFirst())
+		{
+			while(!dataset.isAfterLast())
+			{
+				String ac=dataset.getString(1);
+				int id=dataset.getInt(0);
+				//lista.add(new Active(ac,id));
+				lista.add(ac);
+				dataset.moveToNext();
+			}
+		}
+		Close();
+		return lista;
+	}
+	
 	public int srcActivoId(String activo,Lang lan)
 	{
 		OpenToRead();
@@ -170,32 +206,34 @@ public class Procedures {
 		return id;
 	}
 
-	public List<String[]> lstExcipientes(Lang lan)
+	public List<Container> lstExcipientes(Lang lan)
 	{
-		List<String[]> lista= new ArrayList<String[]>();
+		List<Container> lista= new ArrayList<Container>();
 		Cursor dataset;
 		OpenToRead();
 		switch(lan)
 		{
 		case Spanish:
-			dataset=database.rawQuery("Select Icon,Excipiente from tbl_Excipiente",null);
+			dataset=database.rawQuery("Select Icon,Excipiente from tbl_Excipiente order by Excipiente",null);
 			break;
 		case French:
-			dataset=database.rawQuery("Select Icon,ExcipienteF from tbl_Excipiente",null);
+			dataset=database.rawQuery("Select Icon,ExcipienteF from tbl_Excipiente order by ExcipienteF",null);
 			break;
 		case English:
-			dataset=database.rawQuery("Select Icon,ExcipienteE from tbl_Excipiente",null);
+			dataset=database.rawQuery("Select Icon,ExcipienteE from tbl_Excipiente order by ExcipienteE",null);
 			break;
 		default:
-			dataset=database.rawQuery("Select Icon,Excipiente from tbl_Excipiente",null);
+			dataset=database.rawQuery("Select Icon,Excipiente from tbl_Excipiente order by Excipiente",null);
 			break;
 		}
 		if(dataset.moveToFirst())
 		{
 			while(!dataset.isAfterLast())
-			{
-				String[] arr={dataset.getString(0),dataset.getString(1)};
-				lista.add(arr);
+			{				
+				Container cont= new Container();
+				cont.setIcon(dataset.getString(0));
+				cont.setContainer(dataset.getString(1));
+				lista.add(cont);
 				dataset.moveToNext();
 			}
 		}
@@ -348,5 +386,30 @@ public class Procedures {
 			Log.println(Log.ERROR, "FarmacyLog", ex.getMessage());		
 			return null;
 		}		
+	}
+
+	public List<String> lstMedicinas()
+	{
+		try
+		{
+			List<String> lista= new ArrayList<String>();
+			OpenToRead();
+			Cursor dataset;
+			dataset=database.rawQuery("Select Medicina from tbl_Medicina",null);
+			if(dataset.moveToFirst())
+			{
+				while(!dataset.isAfterLast())
+				{
+					lista.add(dataset.getString(0));
+					dataset.moveToNext();
+				}
+			}			
+			Close();
+			return lista;
+		}
+		catch(Exception ex)
+		{
+			return null;
+		}
 	}
 }

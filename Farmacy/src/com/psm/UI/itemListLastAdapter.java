@@ -57,12 +57,12 @@ public class itemListLastAdapter  extends BaseAdapter {
 		
 		Take toma= takes.get(position);
 		txtMedication=(TextView) vi.findViewById(R.id.txtMedication);
-		txtActive=(TextView) vi.findViewById(R.id.txtActive);
+		txtActive=(TextView) vi.findViewById(R.id.txtActiveName);
 		icono=(ImageView)vi.findViewById(R.id.imgIconX);
 		txtNameTime=(TextView) vi.findViewById(R.id.txtNameTime);
 		txtMedication.setText(toma.getMedicina());		
 		txtActive.setText(toma.getTratamiento());
-		SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		String fecha=df.format(toma.getFecha());		
 		txtNameTime.setText(toma.getUsuario()+"/"+ fecha);
 		String icon=toma.getIcon();
