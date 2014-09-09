@@ -159,12 +159,12 @@ public class Home extends ActionBarActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        
         if (id == R.id.action_settings) {
             return true;            
         }
         if(id==R.id.ProfileAdd)
-        {
-        	Toast.makeText(this,"Adding a new profile",Toast.LENGTH_LONG).show();
+        {        	
         	Fragment frag= new ProfileAddFragment();
         	CambiarFragment(frag);
         }

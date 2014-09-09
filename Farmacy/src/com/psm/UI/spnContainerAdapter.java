@@ -2,6 +2,7 @@ package com.psm.UI;
 
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.psm.Model.*;
 import com.psm.farmacy.R;
 
+@SuppressLint("InflateParams")
 public class spnContainerAdapter extends BaseAdapter{
 
 	private List<Container> list;

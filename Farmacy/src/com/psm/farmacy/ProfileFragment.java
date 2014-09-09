@@ -2,17 +2,10 @@ package com.psm.farmacy;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.psm.Database.Procedures;
 import com.psm.Model.User;
 import com.psm.UI.UserListAdapter;
-
-//import android.app.Activity;
 import android.os.Bundle;
-
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -26,27 +19,17 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class ProfileFragment extends Fragment{
-
-	//private Activity actParent;
+public class ProfileFragment extends BaseFragment{
 	private View vi;
 	private List<User> usuarios = new ArrayList<User>();
 	private ListView lstUsers;
-	private OnItemLongClickListener lstUsersListener;
+	//private OnItemLongClickListener lstUsersListener;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {		
 		setHasOptionsMenu(true);
 		super.onCreate(savedInstanceState);
-		try
-		{
-			Procedures pr= new Procedures(getActivity());
-			usuarios=pr.lstUsuarios();
-		}
-		catch(Exception ex)
-		{
-			Toast.makeText(getActivity(), ex.getMessage(), Toast.LENGTH_LONG).show();			
-		}
+		LoadDatabase(getActivity());		
 	}
 
 	@Override

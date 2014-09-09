@@ -21,7 +21,7 @@ public class DrugstoreMapFragment extends SupportMapFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		vi= inflater.inflate(R.layout.fragment_drugstore_map, container, false);
-		return super.onCreateView(inflater, container, savedInstanceState);
+		return vi;//super.onCreateView(inflater, container, savedInstanceState);
 	}
 
 }

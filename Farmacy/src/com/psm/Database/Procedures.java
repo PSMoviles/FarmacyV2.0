@@ -2,14 +2,12 @@ package com.psm.Database;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-//import android.content.ContentValues;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-
 import com.psm.Model.*;
 
 public class Procedures {
@@ -163,9 +161,7 @@ public class Procedures {
 		{
 			while(!dataset.isAfterLast())
 			{
-				String ac=dataset.getString(1);
-				int id=dataset.getInt(0);
-				//lista.add(new Active(ac,id));
+				String ac=dataset.getString(1);								
 				lista.add(ac);
 				dataset.moveToNext();
 			}
@@ -341,6 +337,7 @@ public class Procedures {
 		}
 	}
 	
+	@SuppressLint("SimpleDateFormat")
 	public List<Take> srcLast()
 	{
 		try
@@ -372,8 +369,7 @@ public class Procedures {
 					toma.setUsuario(dataset.getString(dataset.getColumnIndex("Usuario")));
 					String date=dataset.getString(dataset.getColumnIndex("Fecha")); 
 					SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-					toma.setFecha(f.parse(date));
-					String algo="";
+					toma.setFecha(f.parse(date));					
 					lista.add(toma);
 					dataset.moveToNext();
 				}				
@@ -412,4 +408,12 @@ public class Procedures {
 			return null;
 		}
 	}
+
+	public boolean addMedicina()
+	{
+		return true;
+	}
+
+
+
 }

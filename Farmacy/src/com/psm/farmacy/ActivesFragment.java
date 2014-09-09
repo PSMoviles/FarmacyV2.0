@@ -1,6 +1,7 @@
 package com.psm.farmacy;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
 import java.util.List;
 import com.psm.Database.Procedures;
 import com.psm.Model.Lang;
@@ -15,26 +16,55 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class ActivesFragment extends Fragment{
+public class ActivesFragment extends BaseFragment{
 	private View vi;
 	private Procedures pr;
-	private Button btnBuscar;
-	private EditText txtActivo;
-	private ListView lstActivos;
+	private Button btnSearchActive;
+	private EditText txtActiveName;
+	private ListView lstActives;
+	private List<String> activesParent;
+	private String textMedicine;
+	private int index;
+	private Bundle savedParams;
+	
+	public static ActivesFragment NewInstance(String name,int index,List<String> actives)
+	{
+		ActivesFragment frag= new ActivesFragment();		
+		Bundle args = new Bundle();	
+		args.putString("textMedicine", name);		
+		args.putInt("selSpnType", index);
+		args.putStringArrayList("actives", (ArrayList<String>) actives);
+		frag.setArguments(args);
+		return frag;
+	}
+	
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		vi=inflater.inflate(R.layout.fragment_actives, container, false);
-		txtActivo=(EditText) vi.findViewById(R.id.txtActiveName);
-		btnBuscar=(Button) vi.findViewById(R.id.btnSearchActive);
-		lstActivos=(ListView) vi.findViewById(R.id.lstActives);
+		try
+		{
+			savedParams=getArguments();
+			index=savedParams.getInt("selSpnType");
+			textMedicine=savedParams.getString("textMedicine");
+			activesParent=savedParams.getStringArrayList("actives");
+		}
+		catch(Exception ex)
+		{
+			String e=ex.getMessage();			
+		}
+		txtActiveName=(EditText) vi.findViewById(R.id.txtActiveName);
+		btnSearchActive=(Button) vi.findViewById(R.id.btnSearchActive);
+		lstActives=(ListView) vi.findViewById(R.id.lstActives);
 		listeners();
 		return vi;
 	}
@@ -42,36 +72,41 @@ public class ActivesFragment extends Fragment{
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		try
-		{
-			pr= new Procedures(getActivity());			
-		}
-		catch(Exception ex)
-		{
-			Toast.makeText(getActivity(), ex.getMessage(), Toast.LENGTH_LONG).show();			
-		}
+		LoadDatabase(getActivity());		
 		super.onCreate(savedInstanceState);
 	}
 	
 	private void listeners()
 	{
-		btnBuscar.setOnClickListener(new OnClickListener() {
-			
+		btnSearchActive.setOnClickListener(new OnClickListener() {			
 			@Override
-			public void onClick(View v) {				
-				List<String> lista= new ArrayList<String>();
-				SharedPreferences sharedPref;
-				sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-				String lan =sharedPref.getString("lang", "es");
-				Lang idioma=Lang.Spanish;				
-				if(lan.equals("en"))
-				{idioma=Lang.English;}
-				if(lan.equals("fr"))
-				{idioma=Lang.French;}
-				lista=pr.srcActivos(idioma,txtActivo.getText().toString());
-				lstActivos.setAdapter(new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,lista));
+			public void onClick(View v) {		
+				try
+				{
+					LoadDatabase(getActivity());
+					Procedures pr2= new Procedures(getActivity()); 
+					List<String> lista= new ArrayList<String>();
+					Lang lan=getCurrentLang();
+					String criteria=txtActiveName.getText().toString();
+					lista=pr2.srcActivos(lan,criteria);
+					lstActives.setAdapter(new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,lista));
+				}
+				catch(Exception ex )
+				{
+					String es=ex.getMessage();
+				}
 			}
-		});			
+		});	
+		
+		lstActives.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position,long id) {
+				String item=lstActives.getItemAtPosition(position).toString();		
+				activesParent=savedParams.getStringArrayList("actives");
+				activesParent.add(item);
+				ReplaceFragment(MedicineAddFragment.NewInstance(textMedicine, index, activesParent));				
+			}			
+		});
 	}
 	
 	@Override
