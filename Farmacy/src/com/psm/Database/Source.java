@@ -38,6 +38,8 @@ public class Source extends SQLiteOpenHelper{
 		db.execSQL(TBL_MEDICINATRATAMIENTO);
 		db.execSQL(TBL_HORARIO);
 		db.execSQL(TBL_USUARIO);
+		db.execSQL(TBL_MEDICINAACTIVOS);
+		
 		//Llenar los catálogos
 		for(String[] activo:Activos)
 		{
@@ -53,7 +55,7 @@ public class Source extends SQLiteOpenHelper{
 			db.execSQL("Insert into tbl_Periodo(Periodo,PeriodoE,PeriodoF) VALUES('"+periodo[0].trim()+"','"+periodo[1].trim()+"','"+periodo[2].trim()+"')");				
 		}
 		
-		db.execSQL("Insert Into tbl_medicina(Medicina,Indicacion,ExcipienteId,ActivoId1) VALUES('Tempra','Alivio de dolor y fiebre',5,2)");
+		db.execSQL("Insert Into tbl_medicina(Medicina,Indicacion,ExcipienteId) VALUES('Tempra','Alivio de dolor y fiebre',5)");
 		db.execSQL("insert into tbl_usuario(Usuario,Edad,Sexo)VALUES('Farmacy',20,'M')");
 		db.execSQL("Insert into tbl_tratamiento(Tratamiento,UsuarioId,FecAlta) VALUES('Resfriado',1,'2014-09-03T20:00:00')");
 		db.execSQL("Insert into tbl_MedicinaTratamiento(TratamientoId,MedicinaId,DosisExcipiente,PeriodoDuracion" +
@@ -67,6 +69,8 @@ public class Source extends SQLiteOpenHelper{
 		db.execSQL("Insert into tbl_horario (RelacionId,TomaNo,Fecha,Tomada,Reprogramada) VALUES(1,7,'2014-09-05 20:00:00',0,0)");
 		db.execSQL("Insert into tbl_horario (RelacionId,TomaNo,Fecha,Tomada,Reprogramada) VALUES(1,8,'2014-09-06 04:00:00',0,0)");
 		db.execSQL("Insert into tbl_horario (RelacionId,TomaNo,Fecha,Tomada,Reprogramada) VALUES(1,9,'2014-09-06 12:00:00',0,0)");
+		db.execSQL("Insert into tbl_MedicinaActivo (MedicinaId,ActivoId) VALUES(1,5)");
+		db.execSQL("Insert into tbl_MedicinaActivo (MedicinaId,ActivoId) VALUES(1,52)");
 		
 	}
 	
@@ -95,11 +99,9 @@ public class Source extends SQLiteOpenHelper{
 		"MedicinaId INTEGER PRIMARY KEY," +
 		"Medicina TEXT ," +		
 		"Indicacion TEXT ," +
-		"ExcipienteId INT," +
-		"ActivoId1 INT "+
-		"ActivoId2 INT NULL "+
+		"ExcipienteId INT" +		
 		");";
-	
+
 	private static final String TBL_TRATAMIENTO = 
 		"CREATE TABLE tbl_tratamiento ( " +
 		"TratamientoId INTEGER PRIMARY KEY, " +
@@ -143,6 +145,12 @@ public class Source extends SQLiteOpenHelper{
 		"Activo TEXT," +
 		"ActivoE TEXT," +
 		"ActivoF TEXT);";
+	
+	private static final String TBL_MEDICINAACTIVOS=
+			"CREATE TABLE tbl_MedicinaActivos(" +
+			"MedicinaId INTEGER," +
+			"ActivoId INTEGER" +
+			");";
 	
 	private static final String[][]Periodos={
 		{"Horas","Hours","Heures"},

@@ -2,21 +2,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_vertical|center_horizontal"
+    android:gravity="top|center_vertical"
     android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/btnMedications"
+    <TextView
+        android:id="@+id/edit1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/med_medications" />
+        android:gravity="center_horizontal"
+        android:text="Registro"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
-    <Button
-        android:id="@+id/btnMedicines"
-        android:layout_width="fill_parent"
+    <CheckBox
+        android:id="@+id/chkShowAll"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
-        android:layout_marginTop="50dp"
-        android:text="@string/med_medicine" />
+        android:text="Mostrar tratamientos terminados" />
+
+    <ExpandableListView
+        android:id="@+id/exlstMedication"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </ExpandableListView>
 
 </LinearLayout>

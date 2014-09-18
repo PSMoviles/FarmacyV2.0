@@ -8,9 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
-
 import com.psm.UI.*;
 import com.psm.Database.*;
 import com.psm.Model.*;
@@ -26,6 +26,7 @@ public class HomeFragment extends Fragment {
 		try
 		{
 			Procedures pr= new Procedures(getActivity());
+			tomas= new ArrayList<Take>();
 			tomas=pr.srcLast();
 		}
 		catch(Exception ex)
@@ -40,9 +41,16 @@ public class HomeFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+		try
+		{
 		vi=inflater.inflate(R.layout.fragment_home, container, false);		
 		lstLast= (ListView) vi.findViewById(R.id.lstLast);
         lstLast.setAdapter(new  itemListLastAdapter(getActivity(),tomas));
+		}
+		catch(Exception ex)
+		{
+			ex.getMessage();
+		}
 		return vi;// super.onCreateView(inflater, container, savedInstanceState);
 	}
 

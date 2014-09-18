@@ -5,12 +5,16 @@ import com.psm.Model.Lang;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 public class BaseFragment extends Fragment{
 	public Procedures pr;
+	public View vi; 
 	
 	public void LoadDatabase(Context context)
 	{
@@ -59,4 +63,11 @@ public class BaseFragment extends Fragment{
         }
 		return lan;
 	}
+
+	public void hideInput(IBinder view)
+	{
+		InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+		inputMethodManager.hideSoftInputFromWindow(view, 0);
+	}
+
 }

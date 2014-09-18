@@ -1,12 +1,9 @@
 package com.psm.farmacy;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.List;
 import com.psm.Database.Procedures;
 import com.psm.Model.Lang;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -22,26 +19,26 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 public class ActivesFragment extends BaseFragment{
-	private View vi;
-	private Procedures pr;
+	private View vi;	
 	private Button btnSearchActive;
 	private EditText txtActiveName;
 	private ListView lstActives;
 	private List<String> activesParent;
 	private String textMedicine;
 	private int index;
+	private String indication;
 	private Bundle savedParams;
 	
-	public static ActivesFragment NewInstance(String name,int index,List<String> actives)
+	public static ActivesFragment NewInstance(String name,int index,List<String> actives,String indication)
 	{
 		ActivesFragment frag= new ActivesFragment();		
 		Bundle args = new Bundle();	
 		args.putString("textMedicine", name);		
 		args.putInt("selSpnType", index);
 		args.putStringArrayList("actives", (ArrayList<String>) actives);
+		args.putString("indication", indication);
 		frag.setArguments(args);
 		return frag;
 	}
@@ -57,10 +54,11 @@ public class ActivesFragment extends BaseFragment{
 			index=savedParams.getInt("selSpnType");
 			textMedicine=savedParams.getString("textMedicine");
 			activesParent=savedParams.getStringArrayList("actives");
+			indication=savedParams.getString("indication");
 		}
 		catch(Exception ex)
 		{
-			String e=ex.getMessage();			
+			ex.getMessage();			
 		}
 		txtActiveName=(EditText) vi.findViewById(R.id.txtActiveName);
 		btnSearchActive=(Button) vi.findViewById(R.id.btnSearchActive);
@@ -90,10 +88,11 @@ public class ActivesFragment extends BaseFragment{
 					String criteria=txtActiveName.getText().toString();
 					lista=pr2.srcActivos(lan,criteria);
 					lstActives.setAdapter(new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,lista));
+					hideInput(txtActiveName.getWindowToken());
 				}
 				catch(Exception ex )
 				{
-					String es=ex.getMessage();
+					ex.getMessage();
 				}
 			}
 		});	
@@ -103,8 +102,14 @@ public class ActivesFragment extends BaseFragment{
 			public void onItemClick(AdapterView<?> parent, View view, int position,long id) {
 				String item=lstActives.getItemAtPosition(position).toString();		
 				activesParent=savedParams.getStringArrayList("actives");
+				if(activesParent==null)
+				{
+					activesParent= new ArrayList<String>();
+				}
 				activesParent.add(item);
-				ReplaceFragment(MedicineAddFragment.NewInstance(textMedicine, index, activesParent));				
+				Fragment fr=MedicineAddFragment.NewInstance(textMedicine, index, activesParent,indication);
+				ReplaceFragment(fr);
+				hideInput(txtActiveName.getWindowToken());		    
 			}			
 		});
 	}

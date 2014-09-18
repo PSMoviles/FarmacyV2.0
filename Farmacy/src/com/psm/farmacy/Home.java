@@ -1,9 +1,6 @@
 package com.psm.farmacy;
 
 import com.psm.Database.Procedures;
-import com.psm.UI.*;
-import com.psm.utilery.*;
-
 import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -19,8 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.DrawerLayout.DrawerListener;
-import android.widget.ListView;
 import android.widget.Toast;
 
 public class Home extends ActionBarActivity
@@ -41,6 +36,8 @@ public class Home extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
       //Leer Shared
+        try
+        {
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
         Toast.makeText(this, String.valueOf(sharedPref.getInt("lang",0)), Toast.LENGTH_LONG).show() ;
         //       
@@ -63,6 +60,11 @@ public class Home extends ActionBarActivity
         	Toast.makeText(this, exep, Toast.LENGTH_LONG).show();
         	exep.toString();
         }
+        }catch(Exception ex)
+        {
+        	ex.getMessage();
+        	
+        }
     }
 
     @Override
@@ -84,7 +86,7 @@ public class Home extends ActionBarActivity
 	    		fragment= new HistoryFragment();
 	    		break;
 	    	case 3:
-	    		fragment= new MedicationFragment();
+	    		fragment= new MedicFragment();
 	    		//fragment= new ActivesFragment();
 	    		mTitle = getString(R.string.navDrw_Medication); 
 	    		break;
@@ -159,20 +161,23 @@ public class Home extends ActionBarActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        
+        Fragment frag= new Fragment();
         if (id == R.id.action_settings) {
             return true;            
         }
         if(id==R.id.ProfileAdd)
         {        	
-        	Fragment frag= new ProfileAddFragment();
-        	CambiarFragment(frag);
+        	frag= new ProfileAddFragment();        	
         }
         if(id==R.id.MedicineAdd)
         {
-        	Fragment frag= new MedicineAddFragment();
-        	CambiarFragment(frag);        	
+        	frag= new MedicineAddFragment();        	     	
         }
+        if(id==R.id.MedicationAdd)
+        {
+        	frag=new MedicationAddFragment();        	
+        }        
+    	CambiarFragment(frag);        
         return super.onOptionsItemSelected(item);
     }
     
@@ -181,7 +186,7 @@ public class Home extends ActionBarActivity
     	FragmentManager fragmentManager = getSupportFragmentManager();    
     	FragmentTransaction FT =fragmentManager.beginTransaction();
 		FT.replace(R.id.container, frag);
-		FT.addToBackStack(null);
+		//FT.addToBackStack(null);
 		FT.commit();
     }
     

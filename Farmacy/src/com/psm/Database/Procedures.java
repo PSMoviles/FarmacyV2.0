@@ -25,12 +25,18 @@ public class Procedures {
 
 	private void OpenToWrite()
 	{
-		this.database=this.dbSource.getWritableDatabase();
+		if(database==null || !database.isOpen())
+		{
+			this.database=this.dbSource.getWritableDatabase();
+		}
 	}
 
 	private void OpenToRead()
 	{
-		this.database=this.dbSource.getReadableDatabase();
+		if(database==null || !database.isOpen())
+		{
+			this.database=this.dbSource.getReadableDatabase();
+		}
 	}
 
 	private void Close()
@@ -177,16 +183,16 @@ public class Procedures {
 		switch(lan)
 		{
 		case Spanish:
-			dataset=database.rawQuery("Select PeriodoId from tbl_Activos where Periodo like '%"+ activo+"%'",null);
+			dataset=database.rawQuery("Select ActivoId from tbl_Activos where Activo like '%"+ activo+"%'",null);
 			break;
 		case French:
-			dataset=database.rawQuery("Select PeriodoId from tbl_Activos where PeriodoF like '%"+ activo+"%'",null);
+			dataset=database.rawQuery("Select ActivoId from tbl_Activos where ActivoF like '%"+ activo+"%'",null);
 			break;
 		case English:
-			dataset=database.rawQuery("Select PeriodoId from tbl_Activos where PeriodoE like '%"+ activo+"%'",null);
+			dataset=database.rawQuery("Select ActivoId from tbl_Activos where ActivoE like '%"+ activo+"%'",null);
 			break;
 		default:
-			dataset=database.rawQuery("Select PeriodoId from tbl_Activos where Periodo like '%"+ activo+"%'",null);
+			dataset=database.rawQuery("Select ActivoId from tbl_Activos where Activo like '%"+ activo+"%'",null);
 			break;
 		}
 		int id;
@@ -237,7 +243,7 @@ public class Procedures {
 		return lista;
 	}
 
-	public int srcExcipiente(String excipiente,Lang lan)
+	public int srcExcipienteId(String excipiente,Lang lan)
 	{
 		OpenToRead();
 		Cursor dataset;
@@ -379,7 +385,7 @@ public class Procedures {
 		}
 		catch(Exception ex)
 		{
-			Log.println(Log.ERROR, "FarmacyLog", ex.getMessage());		
+			//Log.println(Log.ERROR, "FarmacyLog", ex.getMessage());		
 			return null;
 		}		
 	}
@@ -409,11 +415,44 @@ public class Procedures {
 		}
 	}
 
-	public boolean addMedicina()
-	{
+	public boolean addMedicina(Lang lan,Medicine data)
+	{		
+		try
+		{		
+			int exid=srcExcipienteId(data.getExcipiente().getContainer(), lan);
+			OpenToWrite();
+			database.execSQL("Insert into tbl_Medicina(Medicina,Indicacion,ExcipienteId) Values('" +
+					data.getNombre()+"','"+data.getIndicacion()+"',"+exid+")");
+//			Cursor c1=database.rawQuery("Select Medicina from tbl_Medicina", null);
+			if(data.getActivos().size()>0)
+			{
+				Cursor dataset=database.rawQuery("Select MAX(MedicinaId) from tbl_Medicina", null);		
+				if(dataset.moveToFirst())
+				{
+					data.setId(dataset.getInt(0));
+					if(data.getActivos().size()>0)
+					{
+						for(Active activo:data.getActivos())
+						{
+							int i= srcActivoId(activo.getName(),lan);
+							OpenToWrite();
+							database.rawQuery("Insert into tbl_MedicinaActivo(MedicinaId,ActivoId) Values("+data.getId()+","+i+")",null);
+							Close();
+						}
+					}
+				}
+			}
+			Close();
+		}
+		catch(Exception ex)
+		{
+			ex.getMessage();			
+		}		
 		return true;
 	}
 
+	
+	
 
 
 }

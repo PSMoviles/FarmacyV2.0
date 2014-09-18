@@ -9,7 +9,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 
 public class DrugstoreMapFragment extends SupportMapFragment {
 
-	private View vi;
+	//private View vi;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -20,8 +20,8 @@ public class DrugstoreMapFragment extends SupportMapFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		vi= inflater.inflate(R.layout.fragment_drugstore_map, container, false);
-		return vi;//super.onCreateView(inflater, container, savedInstanceState);
+		//vi= inflater.inflate(R.layout.fragment_drugstore_map, container, false);
+		return super.onCreateView(inflater, container, savedInstanceState);
 	}
 
 }

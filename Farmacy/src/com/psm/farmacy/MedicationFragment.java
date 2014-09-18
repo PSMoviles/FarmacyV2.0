@@ -1,51 +1,45 @@
 package com.psm.farmacy;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.view.View.OnClickListener;
+import android.widget.CheckBox;
+import android.widget.ExpandableListView;
 
-public class MedicationFragment  extends Fragment{
+
+public class MedicationFragment extends BaseFragment {
 	
-	private View vi;
-	private Button btnTratamientos;
-	private Button btnMedicinas;
-
+	private ExpandableListView exlstMedication;
+	private CheckBox chkShowAll;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
-			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		vi=inflater.inflate(R.layout.fragment_medication, container, false);
-		btnMedicinas=(Button) vi.findViewById(R.id.btnMedicines);
-		btnTratamientos=(Button) vi.findViewById(R.id.btnMedications);
-		createListeners();
+			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {		
+		vi=inflater.inflate(R.layout.fragment_medication, container, false);	
+		exlstMedication=(ExpandableListView)vi.findViewById(R.id.exlstMedication);
+		chkShowAll=(CheckBox)vi.findViewById(R.id.chkShowAll);
 		return vi;
 	}
-	
-	private void createListeners()
-	{
-		btnMedicinas.setOnClickListener(new OnClickListener() {			
-			@Override
-			public void onClick(View v) {	
-				FragmentTransaction transaction =getActivity().getSupportFragmentManager().beginTransaction();
-				transaction.replace(R.id.container,new MedicineFragment());
-				transaction.commit();
-			}
-		});
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {		
+		setHasOptionsMenu(true);
 		
-		btnTratamientos.setOnClickListener(new OnClickListener() {			
-			@Override
-			public void onClick(View v) {
-				FragmentTransaction transaction =getActivity().getSupportFragmentManager().beginTransaction();
-				transaction.replace(R.id.container,new MedicineFragment());
-				transaction.commit();
-			}
-		});
+		super.onCreate(savedInstanceState);
 	}
+	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		menu.clear();
+		inflater.inflate(R.menu.medication, menu);
+		ActionBar bar=getActivity().getActionBar();
+		bar.setTitle("Tratamientos");		
+	}
+
 }

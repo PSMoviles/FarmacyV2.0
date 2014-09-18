@@ -1,16 +1,21 @@
 package com.psm.Model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Medicine {
 	private int Id;
 	private String nombre;
-	private String indicacion;
-	private int excipienteId;
-	private String exipiente;
+	private String indicacion;	
 	private String icon;
-	private int activo1Id;
-	private String activo1;
-	private int activo2Id;
-	private String activo2;
+	private Container excipiente;
+	private List<Active>activos;
+	
+	public Medicine()
+	{
+		activos= new ArrayList<Active>();
+		excipiente= new Container();
+	}
 	
 	
 	public int getId() {
@@ -30,49 +35,26 @@ public class Medicine {
 	}
 	public void setIndicacion(String indicacion) {
 		this.indicacion = indicacion;
-	}
-	public int getExcipienteId() {
-		return excipienteId;
-	}
-	public void setExcipienteId(int excipienteId) {
-		this.excipienteId = excipienteId;
-	}
-	public String getExipiente() {
-		return exipiente;
-	}
-	public void setExipiente(String exipiente) {
-		this.exipiente = exipiente;
-	}
+	}	
 	public String getIcon() {
 		return icon;
 	}
 	public void setIcon(String icon) {
 		this.icon = icon;
+	}	
+	public List<Active> getActivos() {
+		return activos;
 	}
-	public int getActivo1Id() {
-		return activo1Id;
+	public void setActivos(List<Active> activos) {
+		this.activos = activos;
 	}
-	public void setActivo1Id(int activo1Id) {
-		this.activo1Id = activo1Id;
+
+	public Container getExcipiente() {
+		return excipiente;
 	}
-	public String getActivo1() {
-		return activo1;
-	}
-	public void setActivo1(String activo1) {
-		this.activo1 = activo1;
-	}
-	public int getActivo2Id() {
-		return activo2Id;
-	}
-	public void setActivo2Id(int activo2Id) {
-		this.activo2Id = activo2Id;
-	}
-	public String getActivo2() {
-		return activo2;
-	}
-	public void setActivo2(String activo2) {
-		this.activo2 = activo2;
-	}
-	
+
+	public void setExcipiente(Container excipiente) {
+		this.excipiente = excipiente;
+	}	
 	
 }

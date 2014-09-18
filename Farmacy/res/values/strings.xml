@@ -49,6 +49,28 @@
     <string name="med_madd">Medicina</string>
     <string name="med_mtype">Presentación</string>
     <string name="med_actives">Activo(s)</string>    
+    <string name="med_indication">Indicación terapéutica</string>
+    <string name="med_indication_hint">Escriba la indicacíon de su médico aquí</string>
+    
+    <string name="hist_historial">Historial médico</string>
+    <string name="hist_added">Añadido</string>
+    <string name="hist_medication">Tratamientos</string>
+    <string name="hist_medicine">Medicinas</string>
+    <string name="hist_hist_show">Mostrar historial</string>
+    <string name="hist_hist_hide">Ocultar historial</string>
+    <string name="hist_record">Registro de la aplicación</string>
+    <string name="hist_users">Usuarios</string>
+    <string name="hist_medication_finished">Tratamientos concluidos</string>
+    
+    <string name="medi_medication">Tratamiento</string>
+    <string name="medi_user">Paciente</string>
+    <string name="medi_start_date">Fecha inicio</string>
+    <string name="medi_start_time">Hora inicio</string>
+    <string name="medi_frecuency">Frecuencia</string>
+    <string name="medi_duration">Duración</string>
+    <string name="medi_medicine">Medicinas</string>    
+
+  
     
     
 </resources>
