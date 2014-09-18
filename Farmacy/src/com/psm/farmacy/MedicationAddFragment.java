@@ -1,6 +1,5 @@
 package com.psm.farmacy;
 
-import com.psm.UI.DatePickerFragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

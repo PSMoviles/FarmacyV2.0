@@ -451,7 +451,78 @@ public class Procedures {
 		return true;
 	}
 
+	public int countUser()
+	{		
+		try
+		{
+			OpenToRead();
+			Cursor dataset;
+			int count=0;
+			dataset=database.rawQuery("Select count(UsuarioId) from tbl_Usuario",null);
+			if(dataset.moveToFirst())
+			{
+				count=dataset.getInt(0);
+			}
+			Close();
+			return count;			
+			
+		}
+		catch(Exception ex)
+		{
+			ex.getMessage();
+			Close();
+			return 0;
+		}		
+	}
 	
+	public int countMedicine()
+	{
+		try
+		{
+			OpenToRead();
+			Cursor dataset;
+			int count=0;
+			dataset=database.rawQuery("Select count(MedicinaId) from tbl_Medicina",null);
+			if(dataset.moveToFirst())
+			{
+				count=dataset.getInt(0);
+			}
+			Close();
+			return count;			
+			
+		}
+		catch(Exception ex)
+		{
+			ex.getMessage();
+			Close();
+			return 0;
+		}	
+		
+	}
+	
+	public int countMedication()
+	{
+		try
+		{
+			OpenToRead();
+			Cursor dataset;
+			int count=0;
+			dataset=database.rawQuery("Select count(TratamientoId) from tbl_Tratamiento",null);
+			if(dataset.moveToFirst())
+			{
+				count=dataset.getInt(0);
+			}
+			Close();
+			return count;			
+			
+		}
+		catch(Exception ex)
+		{
+			ex.getMessage();
+			Close();
+			return 0;
+		}	
+	}
 	
 
 

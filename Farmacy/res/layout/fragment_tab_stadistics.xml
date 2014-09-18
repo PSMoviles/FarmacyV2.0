@@ -24,14 +24,14 @@
             android:layout_gravity="center_horizontal" >
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/lblSyncDesc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/hist_users"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/txtUserCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Medium Text"
@@ -52,7 +52,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/txtMedicationCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Medium Text"
@@ -73,7 +73,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
-                android:id="@+id/textView6"
+                android:id="@+id/txtMediIncCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Medium Text"
@@ -94,7 +94,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
-                android:id="@+id/textView9"
+                android:id="@+id/txtMedicineCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Medium Text"

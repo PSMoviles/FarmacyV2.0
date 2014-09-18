@@ -37,6 +37,12 @@
     <string name="conf_theme_blue">Beach blue</string>
     <string name="conf_theme_black">Dark Black</string>
     <string name="conf_theme_red">Fire red</string>
+    <string name="conf_sync">Sincronización</string>
+    <string name="conf_sync_desc">esta opción te permite guardar un respaldo en la nube. Solo necesitas un usuario y contraseña para el acceso.</string>
+    <string name="conf_sync_button">Sincronizar ahora</string>
+    <string name="conf_sync_user">Usuario</string>
+    <string name="conf_sync_password">Contraseña</string>
+    <string name="conf_sync_store_credentials">Recordarme</string>
     
     <string name="prof_name">Nombre</string>
     <string name="prof_age">Edad</string>
