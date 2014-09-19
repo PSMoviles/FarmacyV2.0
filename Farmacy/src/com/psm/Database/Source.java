@@ -30,47 +30,54 @@ public class Source extends SQLiteOpenHelper{
 	
 	private void createDatabase(SQLiteDatabase db)
 	{
-		db.execSQL(TBL_EXCIPIENTE);
-		db.execSQL(TBL_ACTIVOS);
-		db.execSQL(TBL_PERIODOS);
-		db.execSQL(TBL_MEDICINA);
-		db.execSQL(TBL_TRATAMIENTO);
-		db.execSQL(TBL_MEDICINATRATAMIENTO);
-		db.execSQL(TBL_HORARIO);
-		db.execSQL(TBL_USUARIO);
-		db.execSQL(TBL_MEDICINAACTIVOS);
-		
-		//Llenar los catálogos
-		for(String[] activo:Activos)
+		try
 		{
-			db.execSQL("Insert into tbl_Activos(Activo,ActivoE,ActivoF) VALUES('"+activo[0].trim()+"','"+activo[1].trim()+"','"+activo[2].trim()+"')");				
+			db.execSQL(TBL_EXCIPIENTE);
+			db.execSQL(TBL_ACTIVOS);
+			db.execSQL(TBL_PERIODOS);
+			db.execSQL(TBL_MEDICINA);
+			db.execSQL(TBL_TRATAMIENTO);
+			db.execSQL(TBL_MEDICINATRATAMIENTO);
+			db.execSQL(TBL_HORARIO);
+			db.execSQL(TBL_USUARIO);
+			db.execSQL(TBL_MEDICINAACTIVOS);
+			
+			//Llenar los catálogos
+			for(String[] activo:Activos)
+			{
+				db.execSQL("Insert into tbl_Activos(Activo,ActivoE,ActivoF) VALUES('"+activo[0].trim()+"','"+activo[1].trim()+"','"+activo[2].trim()+"')");				
+			}
+			for(String[] excipiente:Excipientes)
+			{
+				db.execSQL("Insert into tbl_Excipiente(Icon,Excipiente,ExcipienteE,ExcipienteF)" +
+						" VALUES('"+excipiente[0].trim()+"','"+excipiente[1].trim()+"','"+excipiente[2].trim()+"','"+excipiente[3].trim()+"')");				
+			}
+			for(String[] periodo:Periodos)
+			{
+				db.execSQL("Insert into tbl_Periodo(Periodo,PeriodoE,PeriodoF) VALUES('"+periodo[0].trim()+"','"+periodo[1].trim()+"','"+periodo[2].trim()+"')");				
+			}
+			
+			db.execSQL("Insert Into tbl_medicina(Medicina,Indicacion,ExcipienteId) VALUES('Tempra','Alivio de dolor y fiebre',5)");
+			db.execSQL("insert into tbl_usuario(Usuario,Edad,Sexo)VALUES('Farmacy',20,'M')");
+			db.execSQL("Insert into tbl_tratamiento(Tratamiento,UsuarioId,FecAlta) VALUES('Resfriado',1,'2014-09-03T20:00:00')");
+			db.execSQL("Insert into tbl_MedicinaTratamiento(TratamientoId,MedicinaId,DosisExcipiente,PeriodoDuracion" +
+					",PeriodosDuracion,PeriodoIntervalo,PeriodosIntervalo,TomasTotales) VALUES(1,1,5,2,3,1,8,9) ");		
+			db.execSQL("Insert into tbl_horario (RelacionId,TomaNo,Fecha,Tomada,Reprogramada) VALUES(1,1,'2014-09-03 20:00:00',0,0)");
+			db.execSQL("Insert into tbl_horario (RelacionId,TomaNo,Fecha,Tomada,Reprogramada) VALUES(1,2,'2014-09-04 04:00:00',0,0)");
+			db.execSQL("Insert into tbl_horario (RelacionId,TomaNo,Fecha,Tomada,Reprogramada) VALUES(1,3,'2014-09-04 12:00:00',0,0)");
+			db.execSQL("Insert into tbl_horario (RelacionId,TomaNo,Fecha,Tomada,Reprogramada) VALUES(1,4,'2014-09-04 20:00:00',0,0)");
+			db.execSQL("Insert into tbl_horario (RelacionId,TomaNo,Fecha,Tomada,Reprogramada) VALUES(1,5,'2014-09-05 04:00:00',0,0)");
+			db.execSQL("Insert into tbl_hor  ario (RelacionId,TomaNo,Fecha,Tomada,Reprogramada) VALUES(1,6,'2014-09-05 12:00:00',0,0)");
+			db.execSQL("Insert into tbl_horario (RelacionId,TomaNo,Fecha,Tomada,Reprogramada) VALUES(1,7,'2014-09-05 20:00:00',0,0)");
+			db.execSQL("Insert into tbl_horario (RelacionId,TomaNo,Fecha,Tomada,Reprogramada) VALUES(1,8,'2014-09-06 04:00:00',0,0)");
+			db.execSQL("Insert into tbl_horario (RelacionId,TomaNo,Fecha,Tomada,Reprogramada) VALUES(1,9,'2014-09-06 12:00:00',0,0)");
+			db.execSQL("Insert into tbl_MedicinaActivo (MedicinaId,ActivoId) VALUES(1,5)");
+			db.execSQL("Insert into tbl_MedicinaActivo (MedicinaId,ActivoId) VALUES(1,52)");
 		}
-		for(String[] excipiente:Excipientes)
+		catch(Exception ex)
 		{
-			db.execSQL("Insert into tbl_Excipiente(Icon,Excipiente,ExcipienteE,ExcipienteF)" +
-					" VALUES('"+excipiente[0].trim()+"','"+excipiente[1].trim()+"','"+excipiente[2].trim()+"','"+excipiente[3].trim()+"')");				
+			ex.getMessage();
 		}
-		for(String[] periodo:Periodos)
-		{
-			db.execSQL("Insert into tbl_Periodo(Periodo,PeriodoE,PeriodoF) VALUES('"+periodo[0].trim()+"','"+periodo[1].trim()+"','"+periodo[2].trim()+"')");				
-		}
-		
-		db.execSQL("Insert Into tbl_medicina(Medicina,Indicacion,ExcipienteId) VALUES('Tempra','Alivio de dolor y fiebre',5)");
-		db.execSQL("insert into tbl_usuario(Usuario,Edad,Sexo)VALUES('Farmacy',20,'M')");
-		db.execSQL("Insert into tbl_tratamiento(Tratamiento,UsuarioId,FecAlta) VALUES('Resfriado',1,'2014-09-03T20:00:00')");
-		db.execSQL("Insert into tbl_MedicinaTratamiento(TratamientoId,MedicinaId,DosisExcipiente,PeriodoDuracion" +
-				",PeriodosDuracion,PeriodoIntervalo,PeriodosIntervalo,TomasTotales) VALUES(1,1,5,2,3,1,8,9) ");		
-		db.execSQL("Insert into tbl_horario (RelacionId,TomaNo,Fecha,Tomada,Reprogramada) VALUES(1,1,'2014-09-03 20:00:00',0,0)");
-		db.execSQL("Insert into tbl_horario (RelacionId,TomaNo,Fecha,Tomada,Reprogramada) VALUES(1,2,'2014-09-04 04:00:00',0,0)");
-		db.execSQL("Insert into tbl_horario (RelacionId,TomaNo,Fecha,Tomada,Reprogramada) VALUES(1,3,'2014-09-04 12:00:00',0,0)");
-		db.execSQL("Insert into tbl_horario (RelacionId,TomaNo,Fecha,Tomada,Reprogramada) VALUES(1,4,'2014-09-04 20:00:00',0,0)");
-		db.execSQL("Insert into tbl_horario (RelacionId,TomaNo,Fecha,Tomada,Reprogramada) VALUES(1,5,'2014-09-05 04:00:00',0,0)");
-		db.execSQL("Insert into tbl_horario (RelacionId,TomaNo,Fecha,Tomada,Reprogramada) VALUES(1,6,'2014-09-05 12:00:00',0,0)");
-		db.execSQL("Insert into tbl_horario (RelacionId,TomaNo,Fecha,Tomada,Reprogramada) VALUES(1,7,'2014-09-05 20:00:00',0,0)");
-		db.execSQL("Insert into tbl_horario (RelacionId,TomaNo,Fecha,Tomada,Reprogramada) VALUES(1,8,'2014-09-06 04:00:00',0,0)");
-		db.execSQL("Insert into tbl_horario (RelacionId,TomaNo,Fecha,Tomada,Reprogramada) VALUES(1,9,'2014-09-06 12:00:00',0,0)");
-		db.execSQL("Insert into tbl_MedicinaActivo (MedicinaId,ActivoId) VALUES(1,5)");
-		db.execSQL("Insert into tbl_MedicinaActivo (MedicinaId,ActivoId) VALUES(1,52)");
 		
 	}
 	
@@ -147,7 +154,7 @@ public class Source extends SQLiteOpenHelper{
 		"ActivoF TEXT);";
 	
 	private static final String TBL_MEDICINAACTIVOS=
-			"CREATE TABLE tbl_MedicinaActivos(" +
+			"CREATE TABLE tbl_MedicinaActivo(" +
 			"MedicinaId INTEGER," +
 			"ActivoId INTEGER" +
 			");";
